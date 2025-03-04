@@ -52,18 +52,30 @@ class TestArgmax(TestCase):
     def test_simple(self):
         t = AssemblyTest(self, "argmax.s")
         # create an array in the data section
-        raise NotImplementedError("TODO")
         # TODO
+        array = t.array([1, 2, -4, 8, 3, 5])
         # load address of the array into register a0
         # TODO
+        t.input_array("a0", array)
         # set a1 to the length of the array
         # TODO
+        t.input_scalar("a1", len(array))
         # call the `argmax` function
         # TODO
+        t.call("argmax")
         # check that the register a0 contains the correct output
         # TODO
+        t.check_scalar("a0", 3)
         # generate the `assembly/TestArgmax_test_simple.s` file and run it through venus
         t.execute()
+
+    def test_exception(self):
+        t = AssemblyTest(self, "argmax.s")
+        array0 = t.array([])
+        t.input_array("a0", array0)
+        t.input_scalar("a1", len(array0))
+        t.call("argmax")
+        t.execute(code=77)
 
     @classmethod
     def tearDownClass(cls):
@@ -74,16 +86,108 @@ class TestDot(TestCase):
     def test_simple(self):
         t = AssemblyTest(self, "dot.s")
         # create arrays in the data section
-        raise NotImplementedError("TODO")
         # TODO
+        array0 = t.array([1, 2, 3, 4, 5, 6, 7, 8, 9])
+        array1 = t.array([1, 2, 3, 4, 5, 6, 7, 8, 9])
         # load array addresses into argument registers
         # TODO
+        t.input_array("a0", array0)
+        t.input_array("a1", array1)
         # load array attributes into argument registers
         # TODO
+        t.input_scalar("a2", 9)
+        t.input_scalar("a3", 1)
+        t.input_scalar("a4", 1)
         # call the `dot` function
         t.call("dot")
         # check the return value
         # TODO
+        t.check_scalar("a0", 285)
+        t.execute()
+
+    def test_exception_75(self):
+        t = AssemblyTest(self, "dot.s")
+        # create arrays in the data section
+        # TODO
+        array0 = t.array([])
+        array1 = t.array([])
+        # load array addresses into argument registers
+        # TODO
+        t.input_array("a0", array0)
+        t.input_array("a1", array1)
+        # load array attributes into argument registers
+        # TODO
+        t.input_scalar("a2", 0)
+        t.input_scalar("a3", 1)
+        t.input_scalar("a4", 1)
+        # call the `dot` function
+        t.call("dot")
+        # check the return value
+        # TODO
+        t.execute(code=75)
+
+    def test_exception_76_1(self):
+        t = AssemblyTest(self, "dot.s")
+        # create arrays in the data section
+        # TODO
+        array0 = t.array([1])
+        array1 = t.array([1])
+        # load array addresses into argument registers
+        # TODO
+        t.input_array("a0", array0)
+        t.input_array("a1", array1)
+        # load array attributes into argument registers
+        # TODO
+        t.input_scalar("a2", 1)
+        t.input_scalar("a3", 0)
+        t.input_scalar("a4", 1)
+        # call the `dot` function
+        t.call("dot")
+        # check the return value
+        # TODO
+        t.execute(code=76)
+
+    def test_exception_76_2(self):
+        t = AssemblyTest(self, "dot.s")
+        # create arrays in the data section
+        # TODO
+        array0 = t.array([1])
+        array1 = t.array([1])
+        # load array addresses into argument registers
+        # TODO
+        t.input_array("a0", array0)
+        t.input_array("a1", array1)
+        # load array attributes into argument registers
+        # TODO
+        t.input_scalar("a2", 1)
+        t.input_scalar("a3", 1)
+        t.input_scalar("a4", 0)
+        # call the `dot` function
+        t.call("dot")
+        # check the return value
+        # TODO
+        t.execute(code=76)
+
+    def test_stride(self):
+        t = AssemblyTest(self, "dot.s")
+        # create arrays in the data section
+        # TODO
+        array0 = t.array([1, 2, 3, 4, 5, 6, 7, 8, 9])
+        array1 = t.array([1, 2, 3, 4, 5, 6, 7, 8, 9])
+        # load array addresses into argument registers
+        # TODO
+        t.input_array("a0", array0)
+        t.input_array("a1", array1)
+        # load array attributes into argument registers
+        # TODO
+        t.input_scalar("a2", 3)
+        t.input_scalar("a3", 1)
+        t.input_scalar("a4", 2)
+        # call the `dot` function
+        t.call("dot")
+        # check the return value
+        # TODO
+        t.check_scalar("a0", 22)
         t.execute()
 
     @classmethod
